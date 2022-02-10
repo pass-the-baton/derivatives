@@ -1,0 +1,22 @@
+{
+  "name": "ptb-derivatives",
+  "version": "1.0.0",
+  "description": "Pass The Baton Derivative NFTs",
+  "workspaces": [
+    "ui",
+    "contracts"
+  ],
+  "scripts": {
+    "build": "yarn workspace contracts build && yarn workspace ui build",
+    "develop": "yarn workspace contracts build && yarn workspace contracts hardhat node & yarn workspace ui start && wait",
+    "deploy": "yarn  workspace contracts hardhat run scripts/deploy.ts",
+    "airdrop": "yarn  workspace contracts hardhat run scripts/airdrop.ts"
+  },
+  "repository": "https://github.com/pass-the-baton/ptb-derivatives",
+  "author": "Dr.Keccak",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "ts-node": "^10.5.0"
+  }
+}
