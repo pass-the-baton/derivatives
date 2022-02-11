@@ -31,7 +31,7 @@ contract PTBPFP is ERC721Enumerable, Ownable {
     ) public {
         // we should prove the existence of event log "Donate()"
         // but it is not able to implement it with current primitives.
-        bytes32 h = keccak256(abi.encodePacked(txHash, uri));
+        bytes32 h = keccak256(abi.encodePacked(txHash, msg.sender, uri));
         require(h.recover(signature) == signer, "Invalid signature");
         require(!claimed[txHash], "Already claimed");
         require(bytes(uri).length != 0, "Empty Metadata");
