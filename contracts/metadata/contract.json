@@ -1,0 +1,8 @@
+{
+  "name": "Pass The Baton Exclusive Series",
+  "description": "Collection name, description, image are needed.",
+  "image": "ipfs://bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi",
+  "external_link": "https://baton.com",
+  "seller_fee_basis_points": 700,
+  "fee_recipient": "0x03844B1BF51729a3E9f56A27883f6ABcdDbA29a6"
+}
