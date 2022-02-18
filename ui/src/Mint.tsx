@@ -79,10 +79,12 @@ const useContractData = (
   return [claimableAmount, claimableUntil];
 };
 
+const nftId = 0;
+
 function Mint() {
   const { activateBrowserWallet, activate, library, account } = useEthers();
   const [claimableAmount, claimableUntil] = useContractData(
-    0,
+    nftId,
     library,
     account || undefined
   );
@@ -137,7 +139,7 @@ function Mint() {
               account
             );
             console.log("proof is", proof);
-            await contract.connect(signer).claim(0, 1, 1, proof);
+            await contract.connect(signer).claim(nftId, 1, 1, proof);
           } catch (e) {
             const message = (e as any).message;
             alert(message);
