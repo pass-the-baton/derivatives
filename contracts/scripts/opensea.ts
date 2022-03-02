@@ -23,8 +23,8 @@ async function main() {
   const response0 = await prompts({
     type: "text",
     name: "contract",
-    message: `Please enter the Hitchihiker LE contract address. You can configure HITCHHIKER_LE at the .env file.`,
-    initial: process.env.HITCHHIKER_LE,
+    message: `Please enter the Pass The Baton NFT drop contract address. You can configure PTB_EXCLUSIVE_DROP at the .env file.`,
+    initial: process.env.PTB_EXCLUSIVE_DROP,
   });
   const address = response0.contract as string;
   if (!ethers.utils.isAddress(address)) {
