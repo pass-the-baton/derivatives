@@ -14,7 +14,7 @@ import { parseEther, solidityKeccak256 } from "ethers/lib/utils";
 
 describe("Pass the baton Airdrops", function () {
   let deployer: SignerWithAddress;
-  const signer = ethers.Wallet.createRandom()
+  const signer = ethers.Wallet.createRandom();
   const signerKey = signer.privateKey;
   let minter: SignerWithAddress;
   let ptbPFP: PTBPFP;
@@ -32,7 +32,7 @@ describe("Pass the baton Airdrops", function () {
       "PTBPFP",
       batonMock.address
     );
-    await ptbPFP.setSigner(signer.address)
+    await ptbPFP.setSigner(signer.address);
   });
   let donationTxHash: string;
   it("user create a donation tx", async function () {
@@ -47,8 +47,8 @@ describe("Pass the baton Airdrops", function () {
       ["bytes32", "address", "string"],
       [donationTxHash, minter.address, uri]
     );
-    const key = new ethers.utils.SigningKey(signerKey)
-    const sig = ethers.utils.joinSignature(key.signDigest(h))
+    const key = new ethers.utils.SigningKey(signerKey);
+    const sig = ethers.utils.joinSignature(key.signDigest(h));
     await expect(
       ptbPFP.connect(minter).claim(donationTxHash, uri, sig)
     ).to.emit(ptbPFP, "Transfer");
