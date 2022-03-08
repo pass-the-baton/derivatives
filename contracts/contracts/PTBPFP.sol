@@ -35,7 +35,6 @@ contract PTBPFP is ERC721Enumerable, Ownable {
         require(h.recover(signature) == signer, "Invalid signature");
         require(!claimed[txHash], "Already claimed");
         require(bytes(uri).length != 0, "Empty Metadata");
-        require(IERC721(baton).balanceOf(msg.sender) > 0, "Not an owner");
         claimed[txHash] = true;
         uint256 tokenId = totalSupply();
         uris[tokenId] = uri;
