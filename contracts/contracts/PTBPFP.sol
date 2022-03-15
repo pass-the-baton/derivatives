@@ -33,6 +33,7 @@ contract PTBPFP is ERC721Enumerable, Ownable {
         // but it is not able to implement it with current primitives.
         bytes32 h = keccak256(abi.encodePacked(batonId, msg.sender, uri));
         require(h.recover(signature) == signer, "Invalid signature");
+        require(IERC721(baton).ownerOf(batonId) == msg.sender, "Owner can mint a pfp");
         require(!claimed[batonId][msg.sender], "Already claimed");
         require(bytes(uri).length != 0, "Empty Metadata");
         claimed[batonId][msg.sender] = true;
