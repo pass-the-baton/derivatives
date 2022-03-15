@@ -13,7 +13,7 @@ contract PTBPFP is ERC721Enumerable, Ownable {
     address public immutable baton;
     address public signer;
 
-    mapping(bytes32 => bool) public claimed;
+    mapping(uint256 => mapping(address => bool)) public claimed;
     mapping(uint256 => string) private uris;
 
     constructor(
@@ -25,17 +25,17 @@ contract PTBPFP is ERC721Enumerable, Ownable {
     }
 
     function claim(
-        bytes32 txHash,
+        uint256 batonId,
         string memory uri,
         bytes memory signature
     ) public {
         // we should prove the existence of event log "Donate()"
         // but it is not able to implement it with current primitives.
-        bytes32 h = keccak256(abi.encodePacked(txHash, msg.sender, uri));
+        bytes32 h = keccak256(abi.encodePacked(batonId, msg.sender, uri));
         require(h.recover(signature) == signer, "Invalid signature");
-        require(!claimed[txHash], "Already claimed");
+        require(!claimed[batonId][msg.sender], "Already claimed");
         require(bytes(uri).length != 0, "Empty Metadata");
-        claimed[txHash] = true;
+        claimed[batonId][msg.sender] = true;
         uint256 tokenId = totalSupply();
         uris[tokenId] = uri;
         _safeMint(msg.sender, tokenId);

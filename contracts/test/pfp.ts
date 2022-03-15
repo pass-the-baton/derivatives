@@ -1,16 +1,16 @@
 /* eslint-disable camelcase */
 import { expect } from "chai";
-// eslint-disable-next-line camelcase
+import "ethereum-waffle";
 import {
   PTBPFP__factory,
   PTBPFP,
   BatonMock,
   BatonMock__factory,
 } from "../typechain";
-import hre, { ethers } from "hardhat";
+import { ethers } from "hardhat";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-import { AirdropLeaf, merkleProof, merkleRoot } from "../utils/merkle-tree";
-import { parseEther, solidityKeccak256 } from "ethers/lib/utils";
+import { solidityKeccak256 } from "ethers/lib/utils";
+import { BigNumber } from "ethers";
 
 describe("Pass the baton Airdrops", function () {
   let deployer: SignerWithAddress;
@@ -34,23 +34,28 @@ describe("Pass the baton Airdrops", function () {
     );
     await ptbPFP.setSigner(signer.address);
   });
-  let donationTxHash: string;
+  const batonId: BigNumber = BigNumber.from(1234);
   it("user create a donation tx", async function () {
-    await batonMock.connect(minter).testMint();
-    const receipt = await batonMock.connect(minter).donate(0, { value: 1 });
+    await batonMock.connect(minter).testMint(batonId);
+    const receipt = await batonMock
+      .connect(minter)
+      .donate(batonId, { value: 1 });
     receipt.wait();
-    donationTxHash = receipt.hash;
   });
   const uri = "ipfs://sampleuri";
   it("user sends the tx hash to the server and server creates and returns a signature for it", async function () {
     const h = solidityKeccak256(
-      ["bytes32", "address", "string"],
-      [donationTxHash, minter.address, uri]
+      ["uint256", "address", "string"],
+      [batonId, minter.address, uri]
     );
     const key = new ethers.utils.SigningKey(signerKey);
     const sig = ethers.utils.joinSignature(key.signDigest(h));
+    await expect(ptbPFP.connect(minter).claim(batonId, uri, sig)).to.emit(
+      ptbPFP,
+      "Transfer"
+    );
     await expect(
-      ptbPFP.connect(minter).claim(donationTxHash, uri, sig)
+      ptbPFP.connect(minter).transferFrom(minter.address, deployer.address, 0)
     ).to.emit(ptbPFP, "Transfer");
   });
 });

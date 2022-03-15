@@ -10,8 +10,8 @@ contract BatonMock is ERC721Enumerable, IBaton {
         ERC721(name_, symbol_)
     {}
 
-    function testMint() public {
-        _mint(msg.sender, totalSupply());
+    function testMint(uint256 id) public {
+        _mint(msg.sender, id);
     }
 
     function donate(uint256 tokenId) public payable {

@@ -1,21 +1,15 @@
 /* eslint-disable camelcase */
 import { expect } from "chai";
-// eslint-disable-next-line camelcase
-import {
-  PTBExclusiveDrop__factory,
-  PTBExclusiveDrop,
-} from "../typechain";
-import hre, { ethers } from "hardhat";
+import "ethereum-waffle";
+import { PTBExclusiveDrop__factory, PTBExclusiveDrop } from "../typechain";
+import { ethers } from "hardhat";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { AirdropLeaf, merkleProof, merkleRoot } from "../utils/merkle-tree";
-import { parseEther } from "ethers/lib/utils";
 
 describe("Pass the baton Airdrops", function () {
   let deployer: SignerWithAddress;
   let ptbDrop: PTBExclusiveDrop;
   let airdropLeaves: AirdropLeaf[];
-  let claimableUntil: number;
-  let mintableUntil: number;
   before(async () => {
     const [, minter1, minter2, minter3, minter4, minter5] =
       await ethers.getSigners();
