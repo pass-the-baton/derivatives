@@ -8,6 +8,9 @@ import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 contract PTBExclusiveDrop is ERC1155Supply, Ownable {
     constructor() ERC1155("") Ownable() {}
 
+    string public name = "Pass The Baton NFTs";
+    string public symbol = "PTBNFT";
+
     string[] private _uri;
     string public contractURI;
     uint256[] public claimableUntil;

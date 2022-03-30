@@ -8,8 +8,7 @@ import * as dotenv from "dotenv";
 import { ethers } from "hardhat";
 import prompts from "prompts";
 // eslint-disable-next-line camelcase
-import { IBaton__factory, PTBPFP__factory } from "../typechain";
-import { formatEther } from "@ethersproject/units";
+import { PTBPFP__factory } from "../typechain";
 
 dotenv.config();
 
@@ -26,7 +25,7 @@ async function main() {
   });
   const [deployer] = await ethers.getSigners();
   const pfp = PTBPFP__factory.connect(response0.address, deployer);
-  await pfp.setSigner(response1.address)
+  await pfp.setSigner(response1.address);
 }
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.

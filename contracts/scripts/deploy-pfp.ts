@@ -18,7 +18,7 @@ async function main() {
   });
   const batonAddress = res.contract;
   const ptbPFP = await new PTBPFP__factory(deployer).deploy(
-    "Pass The Baton PFP",
+    "Pass the Baton PFP",
     "BPFP",
     batonAddress
   );
